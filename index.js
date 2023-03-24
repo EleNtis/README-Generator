@@ -37,7 +37,7 @@ message: "What is the title of your project?"
     },
 {
     type: "input",
-    name: "Authors",
+    name: "authors",
     message: "What are the authors of the project?"
 },
 {
@@ -50,12 +50,17 @@ message: "What is the title of your project?"
 
 // function to write README file
 function writeToFile(fileName, data) {
+    return fs.writeFileSync(path.join(process.cwd(), fileName), data);
 }
 
 // function to initialize program
-function init() {
-
+function init(){
+    inquirer.prompt(questions).then((response) =>{
+        console.log(`README loading...`);
+        writeToFile('README.md', generateMarkdown({...response}))
+    })
 }
+
 
 // function call to initialize program
 init();
